@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LanguageSelectionPage: React.FC = () => {
@@ -40,10 +40,7 @@ const LanguageSelectionPage: React.FC = () => {
     // Simulate processing delay
     setTimeout(() => {
       setIsLoading(false);
-      // Here you would typically navigate to your main app
-      alert(`Welcome ${userData?.name}! Language selected: ${selectedLanguage}. You're all set!`);
-      // For demo purposes, you can navigate to a main page or reset to login
-      // navigate('/main');
+      navigate('/vendor-selection');
     }, 1000);
   };
 
