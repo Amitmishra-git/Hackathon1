@@ -120,4 +120,35 @@ body {
   border-color: #667eea;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-} 
+}
+
+/* Vendor and Supplier Card Styles */
+.vendor-card {
+  transition: all 0.3s ease;
+}
+
+.vendor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.supplier-card {
+  transition: all 0.3s ease;
+}
+
+.supplier-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .vendor-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
