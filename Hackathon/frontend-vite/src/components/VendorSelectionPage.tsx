@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { dbOperations, User } from '../lib/supabase';
 
 interface Vendor {
   id: string;
@@ -62,11 +63,12 @@ const VendorSelectionPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    // Check if user is authenticated
+    // Check if user is authenticated and is a vendor
     const storedUserData = localStorage.getItem('userData');
     const selectedLanguage = localStorage.getItem('selectedLanguage');
+    const userType = localStorage.getItem('userType');
     
-    if (!storedUserData || !selectedLanguage) {
+    if (!storedUserData || !selectedLanguage || userType !== 'vendor') {
       navigate('/login');
       return;
     }
@@ -83,24 +85,78 @@ const VendorSelectionPage: React.FC = () => {
     setSelectedVendor(vendor);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!selectedVendor) {
       return;
     }
 
     setIsLoading(true);
 
-    // Store selected vendor
-    localStorage.setItem('selectedVendor', JSON.stringify(selectedVendor));
+    try {
+      // First, create or update user record
+      const userRecord: Omit<User, 'id' | 'created_at' | 'updated_at'> = {
+        name: userData.name,
+        email: userData.email || '',
+        phone: userData.phone || '',
+        user_type: 'vendor',
+        language: localStorage.getItem('selectedLanguage') || 'english'
+      };
 
-    setTimeout(() => {
+      let user;
+      try {
+        // Try to get existing user
+        user = await dbOperations.getUserByEmail(userData.email);
+        if (user) {
+          // Update existing user
+          user = await dbOperations.updateUser(user.id, {
+            user_type: 'vendor',
+            language: userRecord.language
+          });
+        } else {
+          // Create new user
+          user = await dbOperations.createUser(userRecord);
+        }
+      } catch (error) {
+        // If user doesn't exist, create new one
+        user = await dbOperations.createUser(userRecord);
+      }
+
+      // Create vendor record
+      const vendorData = {
+        user_id: user.id,
+        business_name: selectedVendor.name,
+        category: selectedVendor.category,
+        description: selectedVendor.description,
+        location: selectedVendor.location
+      };
+
+      await dbOperations.createVendor(vendorData);
+
+      // Store selected vendor and update user data
+      localStorage.setItem('selectedVendor', JSON.stringify(selectedVendor));
+      
+      const updatedUserData = {
+        ...userData,
+        id: user.id,
+        userType: 'vendor',
+        isRegistered: true
+      };
+      localStorage.setItem('userData', JSON.stringify(updatedUserData));
+
       setIsLoading(false);
       navigate('/supplier-recommendations');
-    }, 800);
+      
+    } catch (error) {
+      console.error('Error saving vendor information:', error);
+      // Continue with local storage only if Supabase fails
+      localStorage.setItem('selectedVendor', JSON.stringify(selectedVendor));
+      setIsLoading(false);
+      navigate('/supplier-recommendations');
+    }
   };
 
   const handleBack = () => {
-    navigate('/language-selection');
+    navigate('/user-type-selection');
   };
 
   if (!userData) {
