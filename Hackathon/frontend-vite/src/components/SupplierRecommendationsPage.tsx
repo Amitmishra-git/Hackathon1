@@ -33,157 +33,157 @@ const SupplierRecommendationsPage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
-  // Sample supplier data - in a real app, this would come from an API
+  // Updated supplier data with food and edible items only
   const allSuppliers: Supplier[] = [
-    // Electronics suppliers
+    // Fresh Fruits & Vegetables suppliers
     {
       id: '1',
-      name: 'ElectroTech Wholesale',
-      category: 'Electronics',
-      products: ['Smartphones', 'Laptops', 'Tablets', 'Accessories', 'Chargers'],
+      name: 'Organic Farm Direct',
+      category: 'Fresh Fruits & Vegetables',
+      products: ['Organic Apples', 'Fresh Spinach', 'Tomatoes', 'Carrots', 'Bananas', 'Leafy Greens'],
       rating: 4.8,
       location: 'Mumbai, Maharashtra',
       contactInfo: {
         phone: '+91 98765 43210',
-        email: 'sales@electrotech.com'
+        email: 'sales@organicfarmdirect.com'
       },
-      priceRange: '₹500 - ₹1,50,000',
-      description: 'Leading wholesale supplier of electronics with 15+ years of experience',
-      established: '2008',
-      certifications: ['ISO 9001', 'CE Certified', 'BIS Approved']
+      priceRange: '₹20 - ₹500 per kg',
+      description: 'Premium organic fruits and vegetables directly from certified organic farms',
+      established: '2015',
+      certifications: ['Organic India Certified', 'FSSAI Licensed', 'Fair Trade']
     },
     {
       id: '2',
-      name: 'Digital Components Ltd',
-      category: 'Electronics',
-      products: ['Circuit Boards', 'Processors', 'Memory Cards', 'Cables', 'Adapters'],
+      name: 'Fresh Harvest Co.',
+      category: 'Fresh Fruits & Vegetables',
+      products: ['Seasonal Fruits', 'Root Vegetables', 'Herbs', 'Citrus Fruits', 'Berries'],
       rating: 4.6,
-      location: 'Bangalore, Karnataka',
+      location: 'Pune, Maharashtra',
       contactInfo: {
         phone: '+91 87654 32109',
-        email: 'info@digitalcomponents.com'
+        email: 'info@freshharvest.com'
       },
-      priceRange: '₹100 - ₹50,000',
-      description: 'Specialized in electronic components and parts supply',
-      established: '2012',
-      certifications: ['ISO 14001', 'RoHS Compliant']
+      priceRange: '₹15 - ₹400 per kg',
+      description: 'Fresh seasonal produce sourced from local farmers',
+      established: '2018',
+      certifications: ['FSSAI Licensed', 'ISO 22000']
     },
-    // Fashion & Apparel suppliers
+    // Packaged Foods & Snacks suppliers
     {
       id: '3',
-      name: 'Textile Masters',
-      category: 'Fashion & Apparel',
-      products: ['Cotton Fabrics', 'Silk', 'Denim', 'Synthetic Materials', 'Accessories'],
+      name: 'Snack Central',
+      category: 'Packaged Foods & Snacks',
+      products: ['Potato Chips', 'Cookies', 'Nuts & Seeds', 'Energy Bars', 'Crackers', 'Dried Fruits'],
       rating: 4.7,
       location: 'Delhi, NCR',
       contactInfo: {
         phone: '+91 76543 21098',
-        email: 'orders@textilemasters.com'
+        email: 'orders@snackcentral.com'
       },
-      priceRange: '₹50 - ₹5,000 per meter',
-      description: 'Premium textile supplier serving fashion industry for over 20 years',
-      established: '2003',
-      certifications: ['GOTS Certified', 'OEKO-TEX Standard']
+      priceRange: '₹50 - ₹1,200 per pack',
+      description: 'Wide variety of healthy and tasty packaged snacks and foods',
+      established: '2012',
+      certifications: ['FSSAI Licensed', 'BRC Food Safety', 'Halal Certified']
     },
     {
       id: '4',
-      name: 'Fashion Forward Supplies',
-      category: 'Fashion & Apparel',
-      products: ['Ready-made Garments', 'Shoes', 'Bags', 'Jewelry', 'Belts'],
+      name: 'Gourmet Foods Ltd',
+      category: 'Packaged Foods & Snacks',
+      products: ['Instant Noodles', 'Ready Meals', 'Breakfast Cereals', 'Pasta', 'Sauces', 'Canned Foods'],
       rating: 4.5,
-      location: 'Chennai, Tamil Nadu',
+      location: 'Bangalore, Karnataka',
       contactInfo: {
         phone: '+91 65432 10987',
-        email: 'contact@fashionforward.com'
+        email: 'contact@gourmetfoods.com'
       },
-      priceRange: '₹200 - ₹15,000',
-      description: 'Complete fashion accessories and garment supplier',
+      priceRange: '₹80 - ₹800 per item',
+      description: 'Premium packaged foods and gourmet meal solutions',
       established: '2010',
-      certifications: ['WRAP Certified', 'BSCI Compliant']
+      certifications: ['FSSAI Licensed', 'ISO 22000', 'HACCP']
     },
-    // Home & Garden suppliers
+    // Dairy & Beverages suppliers
     {
       id: '5',
-      name: 'WoodCraft Industries',
-      category: 'Home & Garden',
-      products: ['Wooden Furniture', 'Chairs', 'Tables', 'Cabinets', 'Decorative Items'],
+      name: 'Pure Dairy Solutions',
+      category: 'Dairy & Beverages',
+      products: ['Fresh Milk', 'Yogurt', 'Cheese', 'Butter', 'Paneer', 'Cream'],
       rating: 4.9,
       location: 'Bangalore, Karnataka',
       contactInfo: {
         phone: '+91 54321 09876',
-        email: 'sales@woodcraft.com'
+        email: 'sales@puredairy.com'
       },
-      priceRange: '₹2,000 - ₹2,00,000',
-      description: 'Handcrafted wooden furniture manufacturer and supplier',
-      established: '1995',
-      certifications: ['FSC Certified', 'Greenguard Gold']
+      priceRange: '₹30 - ₹800 per item',
+      description: 'Fresh dairy products from farm to table with quality assurance',
+      established: '2008',
+      certifications: ['FSSAI Licensed', 'ISO 22000', 'Organic Certified']
     },
     {
       id: '6',
-      name: 'Home Essentials Co.',
-      category: 'Home & Garden',
-      products: ['Kitchen Appliances', 'Home Decor', 'Lighting', 'Garden Tools', 'Planters'],
+      name: 'Beverage Masters',
+      category: 'Dairy & Beverages',
+      products: ['Fresh Juices', 'Smoothies', 'Lassi', 'Coconut Water', 'Energy Drinks', 'Tea & Coffee'],
       rating: 4.4,
-      location: 'Pune, Maharashtra',
+      location: 'Chennai, Tamil Nadu',
       contactInfo: {
         phone: '+91 43210 98765',
-        email: 'info@homeessentials.com'
+        email: 'info@beveragemasters.com'
       },
-      priceRange: '₹500 - ₹75,000',
-      description: 'Complete home and garden essentials supplier',
-      established: '2007',
-      certifications: ['Energy Star', 'ISI Mark']
+      priceRange: '₹25 - ₹300 per bottle',
+      description: 'Fresh and healthy beverages for all occasions',
+      established: '2014',
+      certifications: ['FSSAI Licensed', 'FDA Approved']
     },
-    // Sports & Fitness suppliers
+    // Spices & Condiments suppliers
     {
       id: '7',
-      name: 'Athletic Pro Supplies',
-      category: 'Sports & Fitness',
-      products: ['Sports Equipment', 'Gym Machines', 'Athletic Wear', 'Shoes', 'Accessories'],
-      rating: 4.6,
+      name: 'Spice Kingdom',
+      category: 'Spices & Condiments',
+      products: ['Whole Spices', 'Ground Spices', 'Masala Blends', 'Pickles', 'Chutneys', 'Dried Herbs'],
+      rating: 4.8,
       location: 'Pune, Maharashtra',
       contactInfo: {
         phone: '+91 32109 87654',
-        email: 'orders@athleticpro.com'
+        email: 'orders@spicekingdom.com'
       },
-      priceRange: '₹300 - ₹5,00,000',
-      description: 'Professional sports and fitness equipment supplier',
-      established: '2009',
-      certifications: ['ISO 9001', 'CE Marked']
+      priceRange: '₹100 - ₹2,000 per kg',
+      description: 'Authentic Indian spices and condiments with traditional flavors',
+      established: '2005',
+      certifications: ['FSSAI Licensed', 'Spices Board Certified', 'Organic Certified']
     },
-    // Books & Education suppliers
+    // Grains & Cereals suppliers
     {
       id: '8',
-      name: 'Knowledge Hub Publishers',
-      category: 'Books & Education',
-      products: ['Educational Books', 'E-learning Materials', 'Stationery', 'Digital Content', 'Teaching Aids'],
-      rating: 4.8,
+      name: 'Grain Warehouse',
+      category: 'Grains & Cereals',
+      products: ['Basmati Rice', 'Wheat Flour', 'Pulses', 'Millets', 'Quinoa', 'Oats'],
+      rating: 4.7,
       location: 'Kolkata, West Bengal',
       contactInfo: {
         phone: '+91 21098 76543',
-        email: 'sales@knowledgehub.com'
+        email: 'sales@grainwarehouse.com'
       },
-      priceRange: '₹50 - ₹10,000',
-      description: 'Leading educational content and material supplier',
-      established: '2001',
-      certifications: ['NCERT Approved', 'CBSE Recognized']
+      priceRange: '₹40 - ₹300 per kg',
+      description: 'Premium quality grains and cereals for healthy nutrition',
+      established: '2003',
+      certifications: ['FSSAI Licensed', 'FPO Certified', 'Organic Certified']
     },
-    // Automotive suppliers
+    // Bakery & Confectionery suppliers
     {
       id: '9',
-      name: 'AutoParts Express',
-      category: 'Automotive',
-      products: ['Engine Parts', 'Brake Systems', 'Tires', 'Batteries', 'Accessories'],
-      rating: 4.7,
+      name: 'Sweet Delights Bakery',
+      category: 'Bakery & Confectionery',
+      products: ['Fresh Bread', 'Cakes', 'Pastries', 'Cookies', 'Chocolates', 'Traditional Sweets'],
+      rating: 4.6,
       location: 'Chennai, Tamil Nadu',
       contactInfo: {
         phone: '+91 10987 65432',
-        email: 'support@autopartsexpress.com'
+        email: 'support@sweetdelights.com'
       },
-      priceRange: '₹100 - ₹1,00,000',
-      description: 'Comprehensive automotive parts and accessories supplier',
-      established: '2005',
-      certifications: ['IATF 16949', 'ISO 14001']
+      priceRange: '₹50 - ₹2,500 per item',
+      description: 'Fresh bakery items and traditional sweets made with quality ingredients',
+      established: '2011',
+      certifications: ['FSSAI Licensed', 'Halal Certified', 'ISO 22000']
     }
   ];
 
@@ -241,47 +241,58 @@ const SupplierRecommendationsPage: React.FC = () => {
   };
 
   return (
-    <div className="auth-container" style={{ maxWidth: '800px', maxHeight: '90vh', overflow: 'auto' }}>
-      <h1 className="auth-title">Supplier Recommendations</h1>
+    <div 
+      className="auth-container" 
+      style={{ 
+        maxWidth: '900px', 
+        maxHeight: '95vh', 
+        overflow: 'auto',
+        padding: '1.5rem',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <h1 className="auth-title">Food Supplier Recommendations</h1>
       <div style={{ 
         background: '#f8f9ff', 
         padding: '1rem', 
         borderRadius: '8px', 
         marginBottom: '2rem',
-        border: '1px solid #e1e5e9'
+        border: '1px solid #e1e5e9',
+        flexShrink: 0
       }}>
         <h3 style={{ margin: '0 0 0.5rem 0', color: '#667eea' }}>
           Selected Vendor: {selectedVendor.name}
         </h3>
         <p style={{ margin: '0', color: '#666', fontSize: '0.9rem' }}>
-          Category: {selectedVendor.category} | Showing {filteredSuppliers.length} recommended suppliers
+          Category: {selectedVendor.category} | Showing {filteredSuppliers.length} recommended food suppliers
         </p>
       </div>
 
       {filteredSuppliers.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
-          <p>No suppliers found for this category.</p>
+          <p>No food suppliers found for this category.</p>
           <button onClick={handleBack} className="submit-btn" style={{ marginTop: '1rem' }}>
             Select Different Vendor
           </button>
         </div>
       ) : (
         <>
-          <div style={{ marginBottom: '2rem' }}>
+          <div style={{ marginBottom: '2rem', flex: '1', overflowY: 'auto' }}>
             {filteredSuppliers.map((supplier) => (
-                             <div
-                 key={supplier.id}
-                 className="supplier-card"
-                 style={{
-                   border: selectedSupplier?.id === supplier.id ? '2px solid #667eea' : '1px solid #e1e5e9',
-                   borderRadius: '12px',
-                   padding: '1.5rem',
-                   marginBottom: '1rem',
-                   background: 'white',
-                   cursor: 'pointer'
-                 }}
-                 onClick={() => handleSupplierSelect(supplier)}
-               >
+              <div
+                key={supplier.id}
+                className="supplier-card"
+                style={{
+                  border: selectedSupplier?.id === supplier.id ? '2px solid #667eea' : '1px solid #e1e5e9',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '1rem',
+                  background: 'white',
+                  cursor: 'pointer'
+                }}
+                onClick={() => handleSupplierSelect(supplier)}
+              >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                   <div>
                     <h3 style={{ margin: '0 0 0.5rem 0', color: '#333', fontSize: '1.2rem' }}>
@@ -342,7 +353,7 @@ const SupplierRecommendationsPage: React.FC = () => {
                         </div>
                       </div>
                       <div>
-                        <strong style={{ color: '#333' }}>Certifications:</strong>
+                        <strong style={{ color: '#333' }}>Food Safety Certifications:</strong>
                         <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.25rem' }}>
                           {supplier.certifications.join(', ')}
                         </div>
@@ -350,7 +361,7 @@ const SupplierRecommendationsPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <strong style={{ color: '#333' }}>Products & Services:</strong>
+                      <strong style={{ color: '#333' }}>Available Food Products:</strong>
                       <div style={{ 
                         display: 'flex', 
                         flexWrap: 'wrap', 
@@ -380,7 +391,13 @@ const SupplierRecommendationsPage: React.FC = () => {
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #e1e5e9' }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: '1rem', 
+            paddingTop: '1rem', 
+            borderTop: '1px solid #e1e5e9',
+            flexShrink: 0
+          }}>
             <button
               onClick={handleBack}
               style={{

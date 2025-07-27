@@ -144,11 +144,52 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .auth-container {
-    padding: 1.5rem;
-    margin: 1rem;
+    padding: 1rem;
+    margin: 0.5rem;
+    maxHeight: 98vh !important;
   }
   
   .vendor-grid {
     grid-template-columns: 1fr !important;
   }
+
+  .auth-title {
+    fontSize: 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 0.75rem;
+    margin: 0.25rem;
+  }
+  
+  .auth-title {
+    fontSize: 1.3rem !important;
+  }
+}
+
+/* Ensure proper scrolling on all devices */
+.auth-container {
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #667eea #f1f1f1;
+}
+
+.auth-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.auth-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.auth-container::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 3px;
+}
+
+.auth-container::-webkit-scrollbar-thumb:hover {
+  background: #5a6fd8;
 }

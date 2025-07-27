@@ -15,48 +15,48 @@ const VendorSelectionPage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
   const navigate = useNavigate();
 
-  // Sample vendor data - in a real app, this would come from an API
+  // Updated vendor data with food/edible related categories
   const vendors: Vendor[] = [
     {
       id: '1',
-      name: 'TechMart Electronics',
-      category: 'Electronics',
-      description: 'Leading electronics vendor specializing in smartphones, laptops, and accessories',
+      name: 'Fresh Farm Produce',
+      category: 'Fresh Fruits & Vegetables',
+      description: 'Premium supplier of fresh organic fruits and vegetables directly from farms',
       location: 'Mumbai, Maharashtra'
     },
     {
       id: '2',
-      name: 'Fashion Hub',
-      category: 'Fashion & Apparel',
-      description: 'Premium fashion retailer offering clothing, shoes, and accessories',
+      name: 'Gourmet Food Hub',
+      category: 'Packaged Foods & Snacks',
+      description: 'Wide variety of packaged foods, snacks, and gourmet items for retail',
       location: 'Delhi, NCR'
     },
     {
       id: '3',
-      name: 'HomeCraft Furniture',
-      category: 'Home & Garden',
-      description: 'Quality furniture and home decor items for modern living',
+      name: 'Dairy Fresh Co.',
+      category: 'Dairy & Beverages',
+      description: 'Fresh dairy products, milk, yogurt, cheese, and healthy beverages',
       location: 'Bangalore, Karnataka'
     },
     {
       id: '4',
-      name: 'SportZone',
-      category: 'Sports & Fitness',
-      description: 'Complete sports equipment and fitness gear supplier',
+      name: 'Spice Garden',
+      category: 'Spices & Condiments',
+      description: 'Authentic spices, herbs, condiments, and cooking ingredients',
       location: 'Pune, Maharashtra'
     },
     {
       id: '5',
-      name: 'BookWorld',
-      category: 'Books & Education',
-      description: 'Educational materials, books, and learning resources',
+      name: 'Grain & Cereals Plus',
+      category: 'Grains & Cereals',
+      description: 'Quality grains, cereals, pulses, and staple food items',
       location: 'Kolkata, West Bengal'
     },
     {
       id: '6',
-      name: 'AutoParts Pro',
-      category: 'Automotive',
-      description: 'Automotive parts and accessories supplier',
+      name: 'Sweet Treats Wholesale',
+      category: 'Bakery & Confectionery',
+      description: 'Fresh bakery items, sweets, chocolates, and confectionery products',
       location: 'Chennai, Tamil Nadu'
     }
   ];
@@ -108,18 +108,33 @@ const VendorSelectionPage: React.FC = () => {
   }
 
   return (
-    <div className="auth-container" style={{ maxWidth: '600px' }}>
+    <div 
+      className="auth-container" 
+      style={{ 
+        maxWidth: '900px',
+        maxHeight: '95vh',
+        overflow: 'auto',
+        padding: '1.5rem',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <h1 className="auth-title">Select Your Vendor Category</h1>
       <p style={{ color: '#666', marginBottom: '2rem' }}>
-        Choose the vendor category that best matches your business needs
+        Choose the food vendor category that best matches your business needs
       </p>
 
-      <div className="vendor-grid" style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-        gap: '1rem',
-        marginBottom: '2rem'
-      }}>
+      <div 
+        className="vendor-grid" 
+        style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+          gap: '1rem',
+          marginBottom: '2rem',
+          flex: '1',
+          overflowY: 'auto'
+        }}
+      >
         {vendors.map((vendor) => (
           <div
             key={vendor.id}
@@ -131,7 +146,8 @@ const VendorSelectionPage: React.FC = () => {
               padding: '1.5rem',
               cursor: 'pointer',
               background: selectedVendor?.id === vendor.id ? '#f8f9ff' : 'white',
-              textAlign: 'left'
+              textAlign: 'left',
+              height: 'fit-content'
             }}
           >
             <h3 style={{ 
@@ -169,7 +185,13 @@ const VendorSelectionPage: React.FC = () => {
         ))}
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <div style={{ 
+        display: 'flex', 
+        gap: '1rem',
+        paddingTop: '1rem',
+        borderTop: '1px solid #e1e5e9',
+        flexShrink: 0
+      }}>
         <button
           onClick={handleBack}
           style={{
