@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { dbOperations } from '../lib/supabase';
 
 interface Supplier {
   id: string;
@@ -31,6 +32,7 @@ const SupplierRecommendationsPage: React.FC = () => {
   const [filteredSuppliers, setFilteredSuppliers] = useState<Supplier[]>([]);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // Updated supplier data with food and edible items only
@@ -204,15 +206,55 @@ const SupplierRecommendationsPage: React.FC = () => {
       setUserData(parsedUserData);
       setSelectedVendor(parsedVendor);
       
-      // Filter suppliers based on vendor category
-      const categorySuppliers = allSuppliers.filter(
-        supplier => supplier.category === parsedVendor.category
-      );
-      setFilteredSuppliers(categorySuppliers);
+      // Load suppliers from Supabase based on vendor category
+      loadSuppliers(parsedVendor.category);
     } catch (error) {
       navigate('/login');
     }
   }, [navigate]);
+
+  const loadSuppliers = async (category: string) => {
+    try {
+      setLoading(true);
+      
+      // Try to load suppliers from Supabase first
+      const suppliersFromDB = await dbOperations.getSuppliersByCategory(category);
+      
+      if (suppliersFromDB.length > 0) {
+        // Convert Supabase supplier format to component format
+        const formattedSuppliers = suppliersFromDB.map(supplier => ({
+          id: supplier.id,
+          name: supplier.business_name,
+          category: supplier.category,
+          products: supplier.products,
+          rating: supplier.rating || 4.5,
+          location: supplier.location,
+          contactInfo: supplier.contact_info,
+          priceRange: supplier.price_range,
+          description: supplier.description,
+          established: supplier.established,
+          certifications: supplier.certifications
+        }));
+        
+        setFilteredSuppliers(formattedSuppliers);
+      } else {
+        // Fallback to static data if no suppliers in database
+        const categorySuppliers = allSuppliers.filter(
+          supplier => supplier.category === category
+        );
+        setFilteredSuppliers(categorySuppliers);
+      }
+    } catch (error) {
+      console.error('Error loading suppliers:', error);
+      // Fallback to static data
+      const categorySuppliers = allSuppliers.filter(
+        supplier => supplier.category === category
+      );
+      setFilteredSuppliers(categorySuppliers);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSupplierSelect = (supplier: Supplier) => {
     setSelectedSupplier(selectedSupplier?.id === supplier.id ? null : supplier);
@@ -269,7 +311,11 @@ const SupplierRecommendationsPage: React.FC = () => {
         </p>
       </div>
 
-      {filteredSuppliers.length === 0 ? (
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
+          <p>Loading suppliers...</p>
+        </div>
+      ) : filteredSuppliers.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
           <p>No food suppliers found for this category.</p>
           <button onClick={handleBack} className="submit-btn" style={{ marginTop: '1rem' }}>

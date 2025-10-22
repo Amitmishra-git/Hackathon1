@@ -40,7 +40,7 @@ const LanguageSelectionPage: React.FC = () => {
     // Simulate processing delay
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/vendor-selection');
+      navigate('/user-type-selection');
     }, 1000);
   };
 
